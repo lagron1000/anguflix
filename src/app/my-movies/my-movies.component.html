@@ -1,0 +1,17 @@
+<div class="content-container">
+    <div class="list-container">
+        <h1>My movies </h1> 
+        <button *ngIf="movies.length > 0" mat-button color="primary" (click)="toggleRemove()" >Toggle Removing</button>
+      <div class="cards-container">
+          <h3 *ngIf="movies.length === 0">Please add some movies to your collection</h3>              
+          <mat-card class="movie-card" flex="30" *ngFor="let movie of movies; let idx = index">
+            <app-movie [movie]="movie" [purchase]="purchase" ></app-movie>
+            <div class="button-row">
+             <button *ngIf="removeController" mat-button color="warn" (click)="remove(movie, idx)">Remove <i class="fa fa-trash" aria-hidden="true"></i></button>
+            </div>
+          </mat-card>
+       </div>  
+    </div>
+  </div>
+  
+  

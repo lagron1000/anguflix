@@ -1,0 +1,13 @@
+<div class="content-container">
+  <div class="list-container">
+      <h1>All movies </h1> 
+      <input [(ngModel)]="searchText" placeholder="search text goes here">
+    <div class="cards-container">
+        <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText; let idx = index">      
+          <app-movie [movie]="movie" [purchase]="purchase" ></app-movie>
+          <button mat-button color="primary" (click)="purchase(movie, idx)">Purchase <i class="fa fa-shopping-cart"></i></button>
+        </mat-card>
+     </div>  
+  </div>
+</div>
+
