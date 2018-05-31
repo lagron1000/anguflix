@@ -1,13 +1,23 @@
 <div class="content-container">
     <div class="list-container">
+      <div class="allHeader">
         <h1>My movies </h1> 
-        <input *ngIf="movies.length > 0" [(ngModel)]="searchText" placeholder="Filter movies by title">        
+        <input *ngIf="movies.length > 0" [(ngModel)]="searchText" placeholder="Filter movies by title">    
+        <select *ngIf="movies.length > 0" [(ngModel)]="searchNum" placeholder="Filter movies by year">
+            <option default value>Any Year</option>  
+            <option value="1991">1991</option>
+            <option value="1999">1999</option>
+            <option value="1994">1994</option>
+            <option value="1963">1963</option>
+            <option value="2016">2016</option>        
+          </select>    
         <br> 
         <br>  
         <button *ngIf="movies.length > 0 || removeController" mat-button color="primary" (click)="toggleRemove()" ><span *ngIf="!removeController" style="color: red">Toggle Removing</span><span *ngIf="removeController" style="color: green">Submit Changes</span></button>
+      </div>
       <div class="cards-container">
           <h3 *ngIf="movies.length === 0">Please add some movies to your collection</h3>              
-          <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText; let idx = index">
+          <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">
             <app-movie [movie]="movie" [purchase]="purchase" ></app-movie>
             <div class="button-row">
              <button *ngIf="removeController" style="color: red" mat-button color="warn" (click)="remove(movie, idx)">Remove <i class="fa fa-trash" aria-hidden="true"></i></button>

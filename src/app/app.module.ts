@@ -14,6 +14,7 @@ import { MovieComponent } from './movie/movie.component';
 import { HeaderComponent } from './header/header.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FilterPipe }from './filter.pipe';
+import { YearFilterPipe } from './yearFilter.pipe';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FilterPipe }from './filter.pipe';
     MyMoviesComponent,
     MovieComponent,
     HeaderComponent,
-    FilterPipe
+    FilterPipe,
+    YearFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,7 @@ import { FilterPipe }from './filter.pipe';
     FormsModule,
     AngularFontAwesomeModule,
   ],
-  providers: [],
+  providers: [YearFilterPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

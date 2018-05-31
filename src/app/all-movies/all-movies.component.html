@@ -1,9 +1,19 @@
 <div class="content-container">
   <div class="list-container">
+    <div class="allHeader">
       <h1>All movies </h1> 
       <input [(ngModel)]="searchText" placeholder="Filter movies by title">
+      <select [(ngModel)]="searchNum" placeholder="Filter movies by year">
+        <option default value>Any Year</option>  
+        <option value="1991">1991</option>
+        <option value="1999">1999</option>
+        <option value="1994">1994</option>
+        <option value="1963">1963</option>
+        <option value="2016">2016</option>        
+      </select>
+    </div>
     <div class="cards-container">
-        <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText; let idx = index">      
+        <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">      
           <app-movie [movie]="movie" [purchase]="purchase" ></app-movie>
           <button mat-button color="primary" (click)="purchase(movie, idx)">Purchase <i class="fa fa-shopping-cart"></i></button>
         </mat-card>
