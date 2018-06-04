@@ -14,8 +14,7 @@
     </div>
     <div class="cards-container">
         <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">      
-          <app-movie [movie]="movie" [purchase]="purchase" ></app-movie>
-          <button mat-button color="primary" (click)="purchase(movie, idx)">Purchase <i class="fa fa-shopping-cart"></i></button>
+          <app-movie [movie]="movie" [purchaseButton]="purchaseButton" (moviePurchased)="purchase($event)" ></app-movie>
         </mat-card>
      </div>  
   </div>

@@ -16,14 +16,15 @@ const MOVIES = [
 export class MoviesService {
 
   myMovies : Movie[] = new Array<Movie>()
-  myUser : User = {budget: 9}
+  myUser : User = {budget: 9};
+  unBoughtMovies = MOVIES.concat();
   
   constructor() { }
   getMovies() : Array<Movie>{
-    return MOVIES
+    return this.unBoughtMovies
   }
   getMovie(i) : Movie{
-    return MOVIES[i]
+    return this.unBoughtMovies[i]
   }
   getCollection(){
     return this.myMovies
@@ -31,18 +32,39 @@ export class MoviesService {
   getUser(){
     return this.myUser
   }
-  addToCollection(movie : Movie, i: number){
+  addToCollection(movie : Movie):boolean{
+    debugger
     if (this.myUser.budget - movie.price >= 0){
     this.myMovies.push(movie)
     this.myUser.budget -= movie.price
-    MOVIES.splice(i, 1)
+    let findIndex = (movie) => {
+      for (let i = 0; i < this.unBoughtMovies.length; i++){
+        if (this.unBoughtMovies[i].id === movie.id){
+          return i
+        }
+      }
+    }
+    let index = findIndex(movie)
+    this.unBoughtMovies.splice(index, 1)
+    return true
     } else {
       alert('Insufficient funds!')
+      return false
     }
   }
-  removeFromCollection(movie, i){
+  removeFromCollection(movie){
+    debugger
     this.myUser.budget += movie.price
-    MOVIES.push(movie)
-    this.myMovies.splice(i, 1)
+    this.unBoughtMovies.push(movie)
+    let findIndex = (movie) => {
+      for (let i = 0; i < this.myMovies.length; i++){
+        if (this.myMovies[i].id === movie.id){
+          return i
+        }
+      }
+    }
+    let index = findIndex(movie)
+    // let i = this.myMovies.findIndex(movie);
+    this.myMovies.splice(index, 1)
   }
 }

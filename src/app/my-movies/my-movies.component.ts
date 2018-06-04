@@ -18,8 +18,8 @@ export class MyMoviesComponent implements OnInit {
 
   ngOnInit() {
   }
-  remove(movie, i){
-    this.moviesService.removeFromCollection(movie, i)
+  remove(movie){
+    this.moviesService.removeFromCollection(movie)
   }
 
   toggleRemove(){

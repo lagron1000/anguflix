@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Movie } from './Movie';
 @Pipe({
-  name: 'yearFilter'
+  name: 'yearFilter',
+  pure: false
 })
 export class YearFilterPipe implements PipeTransform {
   transform(movies: Movie[], searchNum: number): Movie[] {

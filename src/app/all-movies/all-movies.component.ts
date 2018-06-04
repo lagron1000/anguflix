@@ -12,6 +12,7 @@ export class AllMoviesComponent implements OnInit {
 
   movies = new Array<Movie>();
   selectedMovie : Movie 
+  purchaseButton:boolean = true
 
   constructor(private moviesService : MoviesService) {
 
@@ -25,8 +26,8 @@ export class AllMoviesComponent implements OnInit {
   selectMovie(movie){
     this.selectedMovie = movie;
   }
-  purchase(movie, index){
-    this.moviesService.addToCollection(movie, index)
+  purchase(movie){
+    this.moviesService.addToCollection(movie)
     this.moviesService.getUser()
   }
 
