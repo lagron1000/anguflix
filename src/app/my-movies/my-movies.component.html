@@ -18,9 +18,9 @@
       <div class="cards-container">
           <h3 *ngIf="movies.length === 0">Please add some movies to your collection</h3>              
           <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">
-            <app-movie [movie]="movie" ></app-movie>
+            <app-movie [movie]="movie" [removeController]="removeController" (movieRemoved)="remove($event)" ></app-movie>
             <div class="button-row">
-             <button *ngIf="removeController" style="color: red" mat-button color="warn" (click)="remove(movie, idx)">Remove <i class="fa fa-trash" aria-hidden="true"></i></button>
+             <!-- <button *ngIf="removeController" style="color: red" mat-button color="warn" (click)="remove(movie, idx)">Remove <i class="fa fa-trash" aria-hidden="true"></i></button> -->
             </div>
           </mat-card>
        </div>  

@@ -9,9 +9,11 @@ import { Movie } from '../Movie';
 })
 export class MovieComponent implements OnInit {
 
+  @Input() removeController
   @Input() purchaseButton
   @Input() movie : Movie = new Movie
   @Output() moviePurchased : EventEmitter<Movie> = new EventEmitter();
+  @Output() movieRemoved : EventEmitter<Movie> = new EventEmitter();
 
   constructor() { }
 
@@ -22,5 +24,9 @@ export class MovieComponent implements OnInit {
 
   buy() {
     this.moviePurchased.emit(this.movie);
+  }
+
+  remove(){
+    this.movieRemoved.emit(this.movie)
   }
 }

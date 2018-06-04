@@ -6,3 +6,6 @@
     <p>{{movie.descrShort}}  ({{movie.price}} $)</p>
 </mat-card-content>        
 <button *ngIf="purchaseButton" mat-button color="primary" (click)="buy()">Purchase <i class="fa fa-shopping-cart"></i></button>
+<div class="button-row">
+  <button *ngIf="removeController" style="color: red" mat-button color="warn" (click)="remove()">Remove <i class="fa fa-trash" aria-hidden="true"></i></button>
+ </div>
