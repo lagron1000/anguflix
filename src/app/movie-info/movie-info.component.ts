@@ -15,16 +15,18 @@ export class MovieInfoComponent implements OnInit {
   myReview : Review = new Review()
 
   constructor(private moviesService : MoviesService, private userService : UserService, private route : ActivatedRoute, private router : Router) {
+    this.moviesService.movieSubject.subscribe((data)=>{
+      this.movie = data
+    })
+    this.getMovie()
 }
 
   ngOnInit() {
-    this.getMovie()
+    // this.getMovie()
   }
   getMovie(){
     this.route.params.subscribe(params => {
-      return this.moviesService.getMovieInfo(params._id).subscribe((data)=>{
-        this.movie = data
-      })})
+      return this.moviesService.getMovieInfo(params._id)})
   }
   purchase(movie){
     this.router.navigate(['']);
@@ -50,7 +52,7 @@ export class MovieInfoComponent implements OnInit {
     } else {
     this.moviesService.addReview(this.movie._id, this.myReview).subscribe(()=>{
       debugger;
-      this.getMovie()
+      // this.getMovie()
       this.toggleAddReview()  
       this.myReview.name = ""
       this.myReview.text = ""

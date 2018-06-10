@@ -3,7 +3,7 @@ import { Movie, Review } from './Movie';
 import { User } from './user';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, Observer } from 'rxjs';
 import { Observable } from 'rxjs';
 
 const MOVIES = [
@@ -25,8 +25,11 @@ export class MoviesService {
   searchSubject : Subject<string>
   searchUpdated : Observable<string>
   searchQuery: string = ""
-  // myMovieInfo : <Movie>
   myMovieInfo : Movie
+  moviesSubject : Subject<Movie[]> = new Subject()
+  moviesObservable : Observable<Movie[]>
+  movieSubject : Subject<Movie> = new Subject()
+  movieObservable : Observable<Movie>
   // unBoughtMovies : Array<Movie> = MOVIES.concat();
 
   constructor(private userService : UserService, private http : HttpClient) { 
@@ -34,6 +37,9 @@ export class MoviesService {
     this.myMovies = userService.getCollection();
     this.searchSubject = new Subject<string>();
     this.searchUpdated = this.searchSubject.asObservable();
+    this.moviesObservable = this.moviesSubject.asObservable()
+    this.movieObservable = this.movieSubject.asObservable()
+    this.getMovies();
   }
   getQuery(){
     this.searchSubject.next(this.searchQuery)
@@ -42,34 +48,31 @@ export class MoviesService {
     debugger
     this.searchQuery = newQuery
   }
-  getMovies() : Observable<Movie[]> {
+  getMovies() : void {
     if (this.searchQuery == ""){
     var observ =  this.http.get<Movie[]>('https://anguflix-api.herokuapp.com/api/movies');
     observ.subscribe((data)=>{
       this.unBoughtMovies = data;
+      this.moviesSubject.next(this.unBoughtMovies)
     });
-    return observ;
+    // return observ;
   } else {
     var observ =  this.http.get<Movie[]>('https://anguflix-api.herokuapp.com/api/movies?title='+this.searchQuery);
     observ.subscribe((data)=>{
       this.unBoughtMovies = data;
+      this.moviesSubject.next(this.unBoughtMovies)
     });
-    return observ;
+    // return observ;
   }
   }
   getMovieInfo(id){
-    // var myMovieInfo = this.http.get<Movie>('https://anguflix-api.herokuapp.com/api/movies/'+id);
-    // return myMovieInfo
-    // console.log(id)
-    // for (let i=0; i<this.unBoughtMovies.length; i++){
-    //   if (id == this.unBoughtMovies[i]._id){
-    //     // var myMovieInfo = this.unBoughtMovies[i]
-    //   }}
+
     var infoObserve = this.http.get<Movie>('https://anguflix-api.herokuapp.com/api/movies/'+id)
-    // infoObserve.subscribe((data)=>{
-    //   this.myMovieInfo = data
-    // })
-    return infoObserve
+
+    infoObserve.subscribe((data)=>{
+      this.myMovieInfo = data
+      this.movieSubject.next(this.myMovieInfo)
+    })
   }
   addReview(id, newReview){
  var reviewObs = this.http.post<Object>('https://anguflix-api.herokuapp.com/api/movies/'+id+'/reviews', newReview)

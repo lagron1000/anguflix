@@ -17,27 +17,28 @@ export class AllMoviesComponent implements OnInit {
   searchQuery : string 
 
   constructor(private moviesService : MoviesService, private userService : UserService, private route : ActivatedRoute, private router : Router) {
+    this.moviesService.searchSubject.subscribe((data)=>{ 
+      this.searchQuery = data
+    })
 
-    
   }
 
   
   ngOnInit() {
-    this.moviesService.searchSubject.subscribe((data)=>{
-      this.searchQuery = data
-    })
-    this.movies = this.moviesService.unBoughtMovies
-    if (!this.movies){   
-    this.moviesService.getMovies().subscribe((data)=>{
-    this.movies = this.moviesService.unBoughtMovies
-  })
-}
+//     this.movies = this.moviesService.unBoughtMovies
+//     if (!this.movies){   
+//     this.moviesService.getMovies().subscribe((data)=>{
+//     this.movies = this.moviesService.unBoughtMovies
+//   })
+// }
+this.moviesService.moviesObservable.subscribe((data)=>{
+  this.movies = data
+})
   }
   updateQuery(){
     this.moviesService.changeQuery(this.searchQuery.toLowerCase())
-    this.moviesService.getMovies().subscribe((data)=>{
+    this.moviesService.moviesSubject.subscribe((data)=>{
       this.movies = this.moviesService.unBoughtMovies
-      
     })
   }
   
