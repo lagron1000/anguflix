@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { MoviesService } from '../movies.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../Movie';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-all-movies',
@@ -13,22 +14,56 @@ export class AllMoviesComponent implements OnInit {
   movies = new Array<Movie>();
   selectedMovie : Movie 
   purchaseButton:boolean = true
+  searchQuery : string 
 
-  constructor(private moviesService : MoviesService) {
+  constructor(private moviesService : MoviesService, private userService : UserService, private route : ActivatedRoute, private router : Router) {
 
-  this.movies = moviesService.getMovies()
     
   }
 
   
   ngOnInit() {
+    this.moviesService.searchSubject.subscribe((data)=>{
+      this.searchQuery = data
+    })
+    this.movies = this.moviesService.unBoughtMovies
+    if (!this.movies){   
+    this.moviesService.getMovies().subscribe((data)=>{
+    this.movies = this.moviesService.unBoughtMovies
+  })
+}
   }
+  updateQuery(){
+    this.moviesService.changeQuery(this.searchQuery.toLowerCase())
+    this.moviesService.getMovies().subscribe((data)=>{
+      this.movies = this.moviesService.unBoughtMovies
+      
+    })
+  }
+  
   selectMovie(movie){
     this.selectedMovie = movie;
   }
   purchase(movie){
+    console.log(this.searchQuery)
+    for (let i=0; i<this.userService.myMovies.length; i++){
+      if (movie._id == this.userService.myMovies[i]._id){
+        alert('Movie already in cart!')
+        return
+      } else {
+        this.moviesService.addToCollection(movie)
+        this.userService.getUser()
+        return
+      }
+    }
     this.moviesService.addToCollection(movie)
-    this.moviesService.getUser()
+    this.userService.getUser()
+  }
+  getInfo(movie){
+    debugger
+    // this.moviesService.getMovieInfo(movie._id)
+    this.router.navigate(['/movie-info/'+movie._id]);
   }
 
 }
+ 

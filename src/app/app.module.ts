@@ -15,6 +15,11 @@ import { HeaderComponent } from './header/header.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FilterPipe }from './filter.pipe';
 import { YearFilterPipe } from './yearFilter.pipe';
+import { HttpClientModule } from '@angular/common/http';
+import { MovieInfoComponent } from './movie-info/movie-info.component';
+import { AppRoutingModule } from './app-routing-module';
+
+
 
 
 @NgModule({
@@ -25,7 +30,9 @@ import { YearFilterPipe } from './yearFilter.pipe';
     MovieComponent,
     HeaderComponent,
     FilterPipe,
-    YearFilterPipe
+    YearFilterPipe,
+    MovieInfoComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -37,6 +44,8 @@ import { YearFilterPipe } from './yearFilter.pipe';
     BrowserAnimationsModule,
     FormsModule,
     AngularFontAwesomeModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [YearFilterPipe],
   bootstrap: [AppComponent]

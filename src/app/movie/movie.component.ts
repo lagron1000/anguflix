@@ -14,6 +14,7 @@ export class MovieComponent implements OnInit {
   @Input() movie : Movie = new Movie
   @Output() moviePurchased : EventEmitter<Movie> = new EventEmitter();
   @Output() movieRemoved : EventEmitter<Movie> = new EventEmitter();
+  @Output() movieGot : EventEmitter<Movie> = new EventEmitter();
 
   constructor() { }
 
@@ -28,5 +29,8 @@ export class MovieComponent implements OnInit {
 
   remove(){
     this.movieRemoved.emit(this.movie)
+  }
+  getMovie(){
+    this.movieGot.emit(this.movie)
   }
 }

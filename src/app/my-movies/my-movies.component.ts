@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Movie } from '../Movie';
 import { MoviesService } from '../movies.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-my-movies',
@@ -11,9 +12,11 @@ export class MyMoviesComponent implements OnInit {
   
   movies = new Array<Movie>();
   removeController : boolean = false
+  searchQuery : String
 
-  constructor(private moviesService : MoviesService) { 
-    this.movies = moviesService.getCollection()
+  constructor(private moviesService : MoviesService, private userService : UserService) { 
+    this.searchQuery = this.moviesService.searchQuery
+    this.movies = userService.getCollection()
   }
 
   ngOnInit() {

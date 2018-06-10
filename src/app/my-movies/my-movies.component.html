@@ -16,7 +16,7 @@
         <button *ngIf="movies.length > 0 || removeController" mat-button color="primary" (click)="toggleRemove()" ><span *ngIf="!removeController" style="color: red">Toggle Removing</span><span *ngIf="removeController" style="color: green">Submit Changes</span></button>
       </div>
       <div class="cards-container">
-          <h3 *ngIf="movies.length === 0">Please add some movies to your collection</h3>              
+          <h3 *ngIf="movies.length === 0" style="color: grey">Please add some movies to your collection</h3>              
           <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">
             <app-movie [movie]="movie" [removeController]="removeController" (movieRemoved)="remove($event)" ></app-movie>
             <div class="button-row">

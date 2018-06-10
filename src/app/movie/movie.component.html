@@ -1,11 +1,15 @@
-<mat-card-header>
+<div class="fullCard">
   <mat-card-title><h2>{{movie.title}} {{movie.year}}</h2></mat-card-title>
-  </mat-card-header>
 <mat-card-content>
-    <img class="img-movie" src="{{movie.img}}">
-    <p>{{movie.descrShort}}  ({{movie.price}} $)</p>
-</mat-card-content>        
-<button *ngIf="purchaseButton" mat-button color="primary" (click)="buy()">Purchase <i class="fa fa-shopping-cart"></i></button>
+    <img class="img-movie" src="{{movie.imgUrl}}">
+    <p>{{movie.shortDescription}}  ({{movie.price}} $)</p>
+</mat-card-content> 
+<div class="button-row">       
+<button class="purchaseBtn" *ngIf="purchaseButton" mat-button color="primary" (click)="buy()">Purchase <i class="fa fa-shopping-cart"></i></button>
+<button *ngIf="purchaseButton" mat-button color="warn" [routerLink]="['movie-info', movie._id]">Info <i class="fa fa-book"></i></button>  
+</div>
+
 <div class="button-row">
   <button *ngIf="removeController" style="color: red" mat-button color="warn" (click)="remove()">Remove <i class="fa fa-trash" aria-hidden="true"></i></button>
  </div>
+</div>

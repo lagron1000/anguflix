@@ -1,0 +1,43 @@
+<div class="card">
+   <h2>{{movie.title}} {{movie.year}} ({{movie.price}} $)</h2>
+  <mat-card-content>
+        <div class="spinner" *ngIf="!movie">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+              </div>
+      <h4>By {{movie.director}}</h4>
+      <img class="img-movie" src="{{movie.imgUrl}}">
+      <p>{{movie.fullDescription}}  </p>
+  </mat-card-content> 
+  <div class="button-row">       
+  <button class="purchaseBtn" mat-button color="primary" (click)="purchase(movie)">Purchase <i class="fa fa-shopping-cart"></i></button>
+  </div>
+  <br>
+  <h2>Reviews</h2>
+  <button (click)="toggleAddReview()">Add Review</button>
+  <div class="reviewForm" *ngIf="addReviewController">
+      <input [(ngModel)]="myReview.name" type="text" placeholder="Name" /> 
+      <!-- <input [(ngModel)]="myReview.rating" type="number" min="0" max="5" placeholder="Rate" />  -->
+      <select [(ngModel)]="myReview.rating" placeholder="Filter movies by year"> 
+        <option value="0">0</option>  
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>        
+      </select>
+      <br>
+      <textarea style="resize: none;" [(ngModel)]="myReview.text" placeholder="Your Review"> </textarea>
+      <br>
+      <input type="button" value="Submit" (click)="addReview()">
+  </div>
+  <hr>
+  <div class="reviews" *ngFor="let review of movie.reviews" > 
+      <div class="reviewCard" *ngIf="review.name && review.rating && review.text">
+      <h4>{{review.name}} : {{review.rating}} <i class="fa fa-star"></i> </h4> 
+       {{review.text}}
+      <hr>
+      </div>
+  </div>
+</div>

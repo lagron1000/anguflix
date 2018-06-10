@@ -2,7 +2,9 @@
   <div class="list-container">
     <div class="allHeader">
       <h1>All movies </h1> 
-      <input [(ngModel)]="searchText" placeholder="Filter movies by title">
+      <!-- <input [(ngModel)]="searchText" placeholder="Filter movies by title"> -->
+      <!-- <input type="button" value="Filter" (click)="updateQuery()" />             -->
+      <input [(ngModel)]="searchQuery" (input)="updateQuery()" placeholder="Filter movies by title">
       <select [(ngModel)]="searchNum" placeholder="Filter movies by year">
         <option default value>Any Year</option>  
         <option value="1991">1991</option>
@@ -13,8 +15,13 @@
       </select>
     </div>
     <div class="cards-container">
+        <div class="spinner" *ngIf="!movies">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
         <mat-card class="movie-card" flex="30" *ngFor="let movie of movies | filter : searchText | yearFilter : searchNum; let idx = index">      
-          <app-movie [movie]="movie" [purchaseButton]="purchaseButton" (moviePurchased)="purchase($event)" ></app-movie>
+          <app-movie [movie]="movie" [purchaseButton]="purchaseButton" (moviePurchased)="purchase($event)" (movieGot)="getInfo($event)" ></app-movie>
         </mat-card>
      </div>  
   </div>
